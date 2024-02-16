@@ -5,16 +5,16 @@
             <div class="card">
                 <div class="card-header">
                     <span>Kategori</span>
-                    <a href="/admin-category-form.html" class="btn btn-sm btn-secondary">Tambah</a>
+                    <a href="<?= base_url('category/create') ?>" class="btn btn-sm btn-secondary">Tambah</a>
 
                     <div class="float-end">
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control form-control-sm text-center" placeholder="Cari">
-                                <button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-search"></i></button>
-                                <a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-eraser"></i></a>
-                            </div>
-                        </form>
+                        <?= form_open(base_url('category/search'), ['method' => 'POST']) ?>
+                        <div class="input-group">
+                            <input type="text" name="keyword" class="form-control form-control-sm text-center" placeholder="Cari" value="<?= $this->session->userdata('keyword') ?>">
+                            <button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-search"></i></button>
+                            <a href="<?= base_url('category/reset') ?>" class="btn btn-secondary btn-sm"><i class="fas fa-eraser"></i></a>
+                        </div>
+                        <?= form_close() ?>
                     </div>
                 </div>
                 <div class="card-body">
@@ -28,18 +28,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($content as $row) : ?>
+                            <?php $i = 0 ?>
+                            <?php foreach ($content as $row) : $i++ ?>
                                 <tr>
-                                    <td>2</td>
-                                    <td><?= $row['title'] ?></td>
-                                    <td><?= $row['slug'] ?></td>
+                                    <td><?= $i; ?></td>
+                                    <td><?= $row->title ?></td>
+                                    <td><?= $row->slug ?></td>
                                     <td>
-                                        <a href="#"><button class="btn btn-sm">
+                                        <?= form_open("category/delete/$row->id", ['method' => 'POST']) ?>
+                                        <?= form_hidden('id', $row->id) ?>
+                                        <a href="<?= base_url("category/edit/$row->id") ?>">
+                                            <button class="btn btn-sm" type="button">
                                                 <i class="fas fa-edit text-info"></i>
-                                            </button></a>
-                                        <button class="btn btn-sm" onclick="return confirm('Yakin ingin hapus ?')">
+                                            </button>
+                                        </a>
+                                        <button class="btn btn-sm" type="submit" onclick="return confirm('Yakin ingin hapus ?')">
                                             <i class="fas fa-trash text-danger"></i>
                                         </button>
+                                        <?= form_close() ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

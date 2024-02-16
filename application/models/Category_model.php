@@ -5,18 +5,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Category_model extends MY_Model
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     protected $perPage = 5;
 
     public function getDefaultValues()
     {
         return [
-            'id'  => '',
-            'slug' => '',
+            'id'     => '',
+            'slug'    => '',
             'title' => ''
         ];
     }
@@ -25,13 +20,13 @@ class Category_model extends MY_Model
     {
         $validationRules = [
             [
-                'field' => 'slug',
-                'label' => 'Slug',
+                'field'    => 'slug',
+                'label'    => 'Slug',
                 'rules' => 'trim|required|callback_unique_slug'
             ],
             [
-                'field' => 'title',
-                'label' => 'Kategori',
+                'field'    => 'title',
+                'label'    => 'Kategori',
                 'rules' => 'trim|required'
             ],
         ];
